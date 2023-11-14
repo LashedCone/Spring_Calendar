@@ -1,0 +1,15 @@
+logging:
+    file:
+        path: logs
+    level:
+        root: INFO
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        password: passwordhere
+        url: jdbc:mysql://localhost:3306/spring_calendar
+        username: developer
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
