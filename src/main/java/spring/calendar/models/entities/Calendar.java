@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "calendars")
 public class Calendar extends IdClass {
 	@NotBlank
-	@Column(name = "calendar_name", nullable = false)
+	@Column(name = "calendar_name", nullable = false, unique = true)
 	@Size(min = 3, max = 50)
 	private String calendarName;
 
@@ -30,4 +30,38 @@ public class Calendar extends IdClass {
 	@OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private Set<Event> events = new HashSet<>();
+
+	public Calendar() {}
+
+	public String getCalendarName() {
+		return calendarName;
+	}
+
+	public void setCalendarName(String calendarName) {
+		this.calendarName = calendarName;
+	}
+
+	public String getCalendarDescription() {
+		return calendarDescription;
+	}
+
+	public void setCalendarDescription(String calendarDescription) {
+		this.calendarDescription = calendarDescription;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Event> getEvents() {
+		return events;
+	}
+
+	public void setEvents(Set<Event> events) {
+		this.events = events;
+	}
 }

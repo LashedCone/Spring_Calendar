@@ -48,4 +48,46 @@ public class Event extends IdClass {
 //	@JoinTable(name = "users_event", joinColumns = @JoinColumn(name = "event_id"),
 //			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> usersList = new HashSet<>();
+
+	public Event() {}
+
+	public String getEventName() {
+		return eventName;
+	}
+
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+
+	public String getEventDescription() {
+		return eventDescription;
+	}
+
+	public void setEventDescription(String eventDescription) {
+		this.eventDescription = eventDescription;
+	}
+
+	public LocalDateTime getEventStart() {
+		return eventStart;
+	}
+
+	public void setEventStart(LocalDateTime eventStart) {
+		this.eventStart = eventStart;
+	}
+
+	public LocalDateTime getEventEnd() {
+		return eventEnd;
+	}
+
+	public void setEventEnd(LocalDateTime eventEnd) {
+		this.eventEnd = eventEnd;
+	}
+
+	public Set<User> getUsersList() {
+		return usersList;
+	}
+
+	public void setUsersList(Set<User> usersList) {
+		this.usersList = usersList;
+	}
 }

@@ -41,8 +41,7 @@ public class User extends IdClass {
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<Event> userEvents = new HashSet<>();
     
-    public User() {
-    }
+    public User() {}
 
     public String getFirstName() {
         return firstName;
