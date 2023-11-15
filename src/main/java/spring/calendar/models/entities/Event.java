@@ -1,21 +1,29 @@
 package spring.calendar.models.entities;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import org.springframework.format.annotation.*;
-import spring.calendar.models.IdClass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
-public class Event extends IdClass {
+public class Event {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@NotBlank
 	@Column(name = "event_name", nullable = false)
-	@Size(min = 3, max = 50)
-	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
+	@Size (min = 3, max = 50)
+	@Pattern (regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String eventName;
 
 	@NotBlank
@@ -46,18 +54,25 @@ public class Event extends IdClass {
 	private LocalDateTime eventEnd;
 
 	@JsonIgnore
-	@ManyToMany(mappedBy = "UserEvents", cascade = CascadeType.ALL)
-//	@JoinTable(name = "users_event", joinColumns = @JoinColumn(name = "event_id"),
-//			inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "users_event", joinColumns = @JoinColumn(name = "event_id"),
+			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> usersList = new HashSet<>();
 
 	@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "calendar_id", nullable = false)
-	@NotNull
 	private Calendar eventCalendar;
 
 	public Event() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getEventName() {
 		return eventName;

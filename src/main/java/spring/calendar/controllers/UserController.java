@@ -26,6 +26,15 @@ public class UserController {
 		}
 	}
 
+	@GetMapping("/info/{id}")
+	public ResponseEntity<?> getUserBasicInfo(@PathVariable Long id) {
+		if (userService.findUserById(id).isPresent()) {
+			return ResponseEntity.ok(userService.getUserBasicInfo(id));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@GetMapping("/all")
 	public ResponseEntity<?> getAllUsers() {
 		return ResponseEntity.ok(userService.findAllUsers());
@@ -35,9 +44,9 @@ public class UserController {
 	public ResponseEntity<?> deleteUserById(@PathVariable Long id) {
 		if (userService.findUserById(id).isPresent()) {
 			userService.deleteUserById(id);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok("Deleted user with id: " + id);
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.status(404).body("User not found with id: " + id);
 		}
 	}
 
@@ -50,8 +59,8 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/{email}")
-	public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
+	@GetMapping("/search/email{email}")
+	public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
 		return ResponseEntity.ok(userService.getUserByEmail(email));
 	}
 }

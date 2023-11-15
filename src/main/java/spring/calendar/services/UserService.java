@@ -1,8 +1,8 @@
 package spring.calendar.services;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.calendar.models.dto.UserDTO;
 import spring.calendar.models.entities.User;
 import spring.calendar.repositories.UserRepo;
 
@@ -13,24 +13,43 @@ public class UserService {
 	@Autowired
 	UserRepo userRepo;
 
-	@Transactional
 	public User createUser(User user) {
 		return userRepo.save(user);
 	}
 
-	@Transactional
 	public User updateUser(Long id, User updatedUser) {
-			User user = userRepo.findById(id)
-					.orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
-				user.setFirstName(updatedUser.getFirstName());
-				user.setLastName(updatedUser.getLastName());
-				user.setEmail(updatedUser.getEmail());
-				user.setPassword(updatedUser.getPassword());
-				return userRepo.save(user);
+	Optional<User> existingUser = userRepo.findById(id);
+		if(existingUser.isPresent()) {
+		User user = existingUser.get();
+		if(updatedUser.getFirstName() != null) {
+			user.setFirstName(updatedUser.getFirstName());
+		}
+		if(updatedUser.getLastName() != null) {
+			user.setLastName(updatedUser.getLastName());
+		}
+		if(updatedUser.getEmail() != null) {
+			user.setEmail(updatedUser.getEmail());
+		}
+		if(updatedUser.getPassword() != null) {
+			user.setPassword(updatedUser.getPassword());
+		}
+		return userRepo.save(user);
+	}
+		return null;
 	}
 
 	public Optional<User> findUserById(Long id) {
 		return userRepo.findById(id);
+	}
+
+	public UserDTO getUserBasicInfo(Long id) {
+		Optional<User> userOptional = userRepo.findById(id);
+
+		if(userOptional.isPresent()) {
+			User user = userOptional.get();
+			return new UserDTO(user.getFirstName(), user.getLastName(), user.getEmail());
+		}
+			return null;
 	}
 
 	public Iterable<User> findAllUsers() {
@@ -41,7 +60,6 @@ public class UserService {
 		userRepo.deleteById(id);
 	}
 
-	@Transactional
 	public User getUserByEmail(String email) {
 		return userRepo.findByEmail(email);
 	}

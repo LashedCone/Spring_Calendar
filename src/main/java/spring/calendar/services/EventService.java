@@ -1,6 +1,5 @@
 package spring.calendar.services;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.calendar.models.entities.Calendar;
@@ -17,12 +16,10 @@ public class EventService {
 	@Autowired
 	CalendarRepo calendarRepo;
 
-	@Transactional
 	public Event createEvent(Event event) {
 		return eventRepo.save(event);
 	}
 
-	@Transactional
 	public Event createEventForCalendar(Long calendarId, Event event) {
 		Calendar calendar = calendarRepo.findById(calendarId).orElseThrow(IllegalArgumentException::new);
 		Event eventToSave = new Event();
@@ -53,29 +50,28 @@ public class EventService {
 		return eventRepo.findById(id);
 	}
 
-	@Transactional
 	public Event updateEvent(long id, Event updatedEvent) {
-		Event existingEvent = eventRepo.findById(id).orElseThrow(IllegalArgumentException::new);
+		Optional<Event> existingEvent = eventRepo.findById(id);
+		if(existingEvent.isPresent()) {
+			Event event = existingEvent.get();
 			if(updatedEvent.getEventName() != null) {
-				existingEvent.setEventName(updatedEvent.getEventName());
+				event.setEventName(updatedEvent.getEventName());
 			}
 			if(updatedEvent.getEventDescription() != null) {
-				existingEvent.setEventDescription(updatedEvent.getEventDescription());
+				event.setEventDescription(updatedEvent.getEventDescription());
 			}
 			if(updatedEvent.getEventStart() != null) {
-				existingEvent.setEventStart(updatedEvent.getEventStart());
+				event.setEventStart(updatedEvent.getEventStart());
 			}
 			if(updatedEvent.getEventEnd() != null) {
-				existingEvent.setEventEnd(updatedEvent.getEventEnd());
+				event.setEventEnd(updatedEvent.getEventEnd());
 			}
-			return eventRepo.save(existingEvent);
+			return eventRepo.save(event);
+		}
+		return null;
 	}
 
 	public Iterable<Event> getEventByName(String eventName) {
 		return eventRepo.findByEventName(eventName);
-	}
-
-	public Iterable<Event> getEventsByCalendarId(long calendarId) {
-		return eventRepo.findEventByCalendarId(calendarId);
 	}
 }

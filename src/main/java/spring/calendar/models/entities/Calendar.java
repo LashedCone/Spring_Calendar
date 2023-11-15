@@ -1,20 +1,25 @@
 package spring.calendar.models.entities;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import spring.calendar.models.IdClass;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "calendars")
-public class Calendar extends IdClass {
+public class Calendar {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+
 	@NotBlank
 	@Column(name = "calendar_name", nullable = false, unique = true)
-	@Size(min = 3, max = 50)
-	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
+	@Size (min = 3, max = 50)
+	@Pattern (regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String calendarName;
 
 	@NotBlank
@@ -26,14 +31,21 @@ public class Calendar extends IdClass {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
 	@JsonIgnore
-	@NotNull
 	private User user;
 
-	@OneToMany(mappedBy = "calendar", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "eventCalendar", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private Set<Event> events = new HashSet<>();
 
 	public Calendar() {}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getCalendarName() {
 		return calendarName;

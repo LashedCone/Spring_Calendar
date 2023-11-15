@@ -2,15 +2,21 @@ package spring.calendar.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import spring.calendar.models.IdClass;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends IdClass {
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @NotBlank
     @Column(name = "first_name", nullable = false)
     @Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end")
@@ -23,15 +29,16 @@ public class User extends IdClass {
 
     @NotBlank
     @Column(name = "email", nullable = false, unique = true)
-    @Email(message = "Please provide a valid email address")
+    @Email (message = "Please provide a valid email address")
     @Pattern(regexp = "\\S+@\\S+", message = "The email address cannot contain spaces")
     private String email;
 
+
     @NotBlank
-    @JsonIgnore
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(name = "password", nullable = false)
-    @Size(min = 8, message = "Password must be at least 8 characters long")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
+    @Size (min = 8, message = "Password must be at least 8 characters long")
+    @Pattern (regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "Password must contain at least one uppercase letter, one lowercase letter, and one digit")
     private String password;
 
     @JsonIgnore
@@ -39,12 +46,20 @@ public class User extends IdClass {
     private Set<Calendar> calendars = new HashSet<>();
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "usersList", cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "users_event", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private Set<Event> userEvents = new HashSet<>();
     
     public User() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getFirstName() {
         return firstName;
