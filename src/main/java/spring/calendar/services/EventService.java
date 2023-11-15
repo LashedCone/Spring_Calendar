@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class EventService {
 	@Autowired
-	private EventRepo eventRepo;
+	EventRepo eventRepo;
 	@Autowired
 	CalendarRepo calendarRepo;
 
