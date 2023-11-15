@@ -1,8 +1,8 @@
-package spring.calendar.repositories;
+package spring.calendar.userFile.repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-import spring.calendar.models.entities.User;
+import spring.calendar.userFile.model.entity.User;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {

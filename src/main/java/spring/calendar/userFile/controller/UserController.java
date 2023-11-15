@@ -1,10 +1,10 @@
-package spring.calendar.controllers;
+package spring.calendar.userFile.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.calendar.models.entities.User;
-import spring.calendar.services.UserService;
+import spring.calendar.userFile.model.entity.User;
+import spring.calendar.userFile.service.UserService;
 
 @RestController
 @RequestMapping("/user")

@@ -1,10 +1,13 @@
-package spring.calendar.services;
+package spring.calendar.calendar.service;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.calendar.models.entities.*;
-import spring.calendar.repositories.*;
+import spring.calendar.calendar.model.entity.Calendar;
+import spring.calendar.calendar.repository.CalendarRepo;
+import spring.calendar.repository.*;
+import spring.calendar.userFile.model.entity.User;
+import spring.calendar.userFile.repository.UserRepo;
 
 import java.util.Optional;
 

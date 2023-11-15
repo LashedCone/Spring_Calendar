@@ -1,11 +1,11 @@
-package spring.calendar.services;
+package spring.calendar.eventFile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.calendar.models.entities.Calendar;
-import spring.calendar.models.entities.Event;
-import spring.calendar.repositories.CalendarRepo;
-import spring.calendar.repositories.EventRepo;
+import spring.calendar.calendar.model.entity.Calendar;
+import spring.calendar.eventFile.model.entity.Event;
+import spring.calendar.calendar.repository.CalendarRepo;
+import spring.calendar.eventFile.repository.EventRepo;
 
 import java.util.Optional;
 

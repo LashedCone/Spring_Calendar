@@ -1,10 +1,10 @@
-package spring.calendar.services;
+package spring.calendar.userFile.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.calendar.models.dto.UserDTO;
-import spring.calendar.models.entities.User;
-import spring.calendar.repositories.UserRepo;
+import spring.calendar.userFile.model.dto.UserDTO;
+import spring.calendar.userFile.model.entity.User;
+import spring.calendar.userFile.repository.UserRepo;
 
 import java.util.Optional;
 

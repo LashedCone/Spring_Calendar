@@ -1,9 +1,8 @@
-package spring.calendar.repositories;
+package spring.calendar.eventFile.repository;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-import spring.calendar.models.entities.Calendar;
-import spring.calendar.models.entities.Event;
+import spring.calendar.eventFile.model.entity.Event;
 
 @Repository
 public interface EventRepo extends JpaRepository<Event, Long> {

@@ -1,9 +1,9 @@
-package spring.calendar.controllers;
+package spring.calendar.calendar.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/event")
-public class EventController {
+@RequestMapping("/calendar")
+public class CalendarController {
 }

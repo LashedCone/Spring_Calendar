@@ -1,4 +1,4 @@
-package spring.calendar.models.entities;
+package spring.calendar.eventFile.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
+import spring.calendar.calendar.model.entity.Calendar;
+import spring.calendar.userFile.model.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,7 +28,6 @@ public class Event {
 	@Pattern (regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String eventName;
 
-	@NotBlank
 	@Column(name = "event_description")
 	@Size(min = 3, max = 200)
 	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of description")

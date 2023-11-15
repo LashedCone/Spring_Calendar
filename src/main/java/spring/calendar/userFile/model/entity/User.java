@@ -1,4 +1,4 @@
-package spring.calendar.models.entities;
+package spring.calendar.userFile.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import spring.calendar.calendar.model.entity.Calendar;
+import spring.calendar.eventFile.model.entity.Event;
 
 import java.util.HashSet;
 import java.util.Set;
