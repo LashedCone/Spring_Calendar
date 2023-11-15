@@ -13,15 +13,18 @@ import java.util.Set;
 public class User extends IdClass {
     @NotBlank
     @Column(name = "first_name", nullable = false)
+    @Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end")
     private String firstName;
 
     @NotBlank
     @Column(name = "last_name", nullable = false)
+    @Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end")
     private String lastName;
 
     @NotBlank
     @Column(name = "email", nullable = false, unique = true)
     @Email(message = "Please provide a valid email address")
+    @Pattern(regexp = "\\S+@\\S+", message = "The email address cannot contain spaces")
     private String email;
 
     @NotBlank

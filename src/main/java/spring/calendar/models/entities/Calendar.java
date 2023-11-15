@@ -14,11 +14,13 @@ public class Calendar extends IdClass {
 	@NotBlank
 	@Column(name = "calendar_name", nullable = false, unique = true)
 	@Size(min = 3, max = 50)
+	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String calendarName;
 
 	@NotBlank
 	@Column(name = "calendar_description", nullable = false)
 	@Size(min = 3, max = 200)
+	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of description")
 	private String calendarDescription;
 
 	@ManyToOne(optional = false)

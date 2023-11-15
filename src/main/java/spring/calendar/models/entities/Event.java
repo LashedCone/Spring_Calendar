@@ -11,21 +11,23 @@ import java.util.*;
 
 @Entity
 @Table(name = "events")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Event extends IdClass {
 	@NotBlank
 	@Column(name = "event_name", nullable = false)
 	@Size(min = 3, max = 50)
+	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String eventName;
 
 	@NotBlank
 	@Column(name = "event_description")
 	@Size(min = 3, max = 200)
+	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of description")
 	private String eventDescription;
 
 	@Column(name = "event_start")
 	@NotNull
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
+	@DateTimeFormat (pattern = "dd-MM-yyyy HH:mm")
 	/*shape = JsonFormat.Shape.STRING
 	Questa annotazione permette di controllare la rappresentazione formattata
 	dei campi di una classe quando vengono convertiti da e verso JSON*/
@@ -33,7 +35,7 @@ public class Event extends IdClass {
 
 	@Column(name = "event_end")
 	@NotNull
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@DateTimeFormat (pattern = "dd-MM-yyyy HH:mm")
 	/*Entrambe le annotazioni hanno scopi diversi e vengono utilizzate in contesti diversi.
 	Ad esempio, se stai scrivendo un controller REST per ricevere input da un client
@@ -48,6 +50,12 @@ public class Event extends IdClass {
 //	@JoinTable(name = "users_event", joinColumns = @JoinColumn(name = "event_id"),
 //			inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private Set<User> usersList = new HashSet<>();
+
+	@JsonIgnore
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "calendar_id", nullable = false)
+	@NotNull
+	private Calendar eventCalendar;
 
 	public Event() {}
 
@@ -89,5 +97,13 @@ public class Event extends IdClass {
 
 	public void setUsersList(Set<User> usersList) {
 		this.usersList = usersList;
+	}
+
+	public Calendar getEventCalendar() {
+		return eventCalendar;
+	}
+
+	public void setEventCalendar(Calendar eventCalendar) {
+		this.eventCalendar = eventCalendar;
 	}
 }
