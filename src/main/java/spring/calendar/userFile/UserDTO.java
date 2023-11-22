@@ -1,4 +1,4 @@
-package spring.calendar.userFile.model.dto;
+package spring.calendar.userFile;
 
 public class UserDTO {
 	private Long id;

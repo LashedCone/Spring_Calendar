@@ -1,12 +1,12 @@
-package spring.calendar.calendar.model.entity;
+package spring.calendar.calendar;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import spring.calendar.eventFile.model.entity.Event;
-import spring.calendar.userFile.model.entity.User;
+import spring.calendar.eventFile.Event;
+import spring.calendar.userFile.User;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +16,7 @@ import java.util.Set;
 public class Calendar {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "calendar_id")
 	private Long id;
 
 	@NotBlank

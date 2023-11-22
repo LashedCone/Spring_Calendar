@@ -1,4 +1,4 @@
-package spring.calendar.eventFile.model.entity;
+package spring.calendar.eventFile;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -8,8 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
-import spring.calendar.calendar.model.entity.Calendar;
-import spring.calendar.userFile.model.entity.User;
+import spring.calendar.calendar.Calendar;
+import spring.calendar.userFile.User;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -20,6 +20,7 @@ import java.util.Set;
 public class Event {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "event_id")
 	private Long id;
 
 	@NotBlank

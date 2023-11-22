@@ -1,11 +1,9 @@
-package spring.calendar.eventFile.service;
+package spring.calendar.eventFile;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.calendar.calendar.model.entity.Calendar;
-import spring.calendar.eventFile.model.entity.Event;
-import spring.calendar.calendar.repository.CalendarRepo;
-import spring.calendar.eventFile.repository.EventRepo;
+import spring.calendar.calendar.Calendar;
+import spring.calendar.calendar.CalendarRepo;
 
 import java.util.Optional;
 
@@ -38,7 +36,7 @@ public class EventService {
 		return eventRepo.save(eventToSave);
 	}
 
-	public void deleteEvent(long id) {
+	public void deleteEvent(Long id) {
 		eventRepo.deleteById(id);
 	}
 
@@ -46,11 +44,11 @@ public class EventService {
 		return eventRepo.findAll();
 	}
 
-	public Optional<Event> getEvent(long id) {
+	public Optional<Event> getEvent(Long id) {
 		return eventRepo.findById(id);
 	}
 
-	public Event updateEvent(long id, Event updatedEvent) {
+	public Event updateEvent(Long id, Event updatedEvent) {
 		Optional<Event> existingEvent = eventRepo.findById(id);
 		if(existingEvent.isPresent()) {
 			Event event = existingEvent.get();
