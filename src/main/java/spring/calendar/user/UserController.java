@@ -1,4 +1,4 @@
-package spring.calendar.userFile;
+package spring.calendar.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UserController {
 		if (userService.findUserById(id).isPresent()) {
 			return ResponseEntity.ok(userService.findUserById(id));
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
@@ -29,7 +29,7 @@ public class UserController {
 		if (userService.findUserById(id).isPresent()) {
 			return ResponseEntity.ok(userService.getUserBasicInfo(id));
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
@@ -53,7 +53,7 @@ public class UserController {
 		if (userService.findUserById(id).isPresent()) {
 			return ResponseEntity.ok(userService.updateUser(id, updatedUser));
 		} else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 

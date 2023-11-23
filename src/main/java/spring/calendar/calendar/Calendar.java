@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import spring.calendar.eventFile.Event;
-import spring.calendar.userFile.User;
+import spring.calendar.event.Event;
+import spring.calendar.user.User;
 
 import java.util.HashSet;
 import java.util.Set;

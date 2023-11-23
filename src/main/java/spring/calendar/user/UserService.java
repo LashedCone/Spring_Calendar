@@ -1,4 +1,4 @@
-package spring.calendar.userFile;
+package spring.calendar.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

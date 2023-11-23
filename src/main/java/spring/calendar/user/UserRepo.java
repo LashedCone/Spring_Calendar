@@ -1,4 +1,4 @@
-package spring.calendar.userFile;
+package spring.calendar.user;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;

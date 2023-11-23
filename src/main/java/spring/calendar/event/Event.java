@@ -1,4 +1,4 @@
-package spring.calendar.eventFile;
+package spring.calendar.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 import spring.calendar.calendar.Calendar;
-import spring.calendar.userFile.User;
+import spring.calendar.user.User;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

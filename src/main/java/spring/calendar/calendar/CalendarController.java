@@ -41,6 +41,4 @@ public class CalendarController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-
-
 }

@@ -2,8 +2,8 @@ package spring.calendar.calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.calendar.userFile.User;
-import spring.calendar.userFile.UserRepo;
+import spring.calendar.user.User;
+import spring.calendar.user.UserRepo;
 
 import java.util.Optional;
 

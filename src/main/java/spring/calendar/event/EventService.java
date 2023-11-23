@@ -1,9 +1,10 @@
-package spring.calendar.eventFile;
+package spring.calendar.event;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.calendar.calendar.Calendar;
 import spring.calendar.calendar.CalendarRepo;
+import spring.calendar.user.User;
 
 import java.util.Optional;
 
@@ -14,12 +15,9 @@ public class EventService {
 	@Autowired
 	CalendarRepo calendarRepo;
 
-	public Event createEvent(Event event) {
-		return eventRepo.save(event);
-	}
-
-	public Event createEventForCalendar(Long calendarId, Event event) {
+	public Event createEvent(Long calendarId, Event event) {
 		Calendar calendar = calendarRepo.findById(calendarId).orElseThrow(IllegalArgumentException::new);
+		User user = calendar.getUser();
 		Event eventToSave = new Event();
 		if(event.getEventName() != null) {
 			eventToSave.setEventName(event.getEventName());
@@ -33,6 +31,9 @@ public class EventService {
 		if(event.getEventEnd() != null) {
 			eventToSave.setEventEnd(event.getEventEnd());
 		}
+		eventToSave.getUsersList().add(user);
+		eventToSave.setEventCalendar(calendar);
+		calendar.getEvents().add(eventToSave);
 		return eventRepo.save(eventToSave);
 	}
 
@@ -44,7 +45,7 @@ public class EventService {
 		return eventRepo.findAll();
 	}
 
-	public Optional<Event> getEvent(Long id) {
+	public Optional<Event> getEventById(Long id) {
 		return eventRepo.findById(id);
 	}
 

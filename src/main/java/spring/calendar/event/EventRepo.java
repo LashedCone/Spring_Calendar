@@ -1,4 +1,4 @@
-package spring.calendar.eventFile;
+package spring.calendar.event;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
