@@ -12,8 +12,8 @@ public class CalendarController {
 	@Autowired
 	CalendarService calendarService;
 
-	@PostMapping
-	public ResponseEntity<Calendar> createCalendar(@PathVariable Long userId, Calendar newCalendar) {
+	@PostMapping("/{userId}")
+	public ResponseEntity<Calendar> createCalendar(@PathVariable Long userId, @RequestBody Calendar newCalendar) {
 		return ResponseEntity.ok(calendarService.createUserCalendar(userId, newCalendar));
 	}
 
@@ -33,10 +33,10 @@ public class CalendarController {
 		return ResponseEntity.ok("Calendar deleted");
 	}
 
-	@PatchMapping("/{id}")
-	public ResponseEntity<?> updateCalendar(@PathVariable Long id, @RequestBody Calendar calendar) {
-		if(calendarService.findCalendarById(id).isPresent()) {
-			return ResponseEntity.ok(calendarService.updateCalendar(id, calendar));
+	@PatchMapping("userID/{userId}/calendarID/{calendarId}")
+	public ResponseEntity<?> updateCalendar(@PathVariable Long userId, @PathVariable Long calendarId, @RequestBody Calendar updatedCalendar) {
+		if(calendarService.findCalendarById(calendarId).isPresent()) {
+			return ResponseEntity.ok(calendarService.updateCalendar(userId, calendarId, updatedCalendar));
 		} else {
 			return ResponseEntity.notFound().build();
 		}

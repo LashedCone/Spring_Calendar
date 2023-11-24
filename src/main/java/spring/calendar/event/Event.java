@@ -36,8 +36,7 @@ public class Event {
 
 	@Column(name = "event_start")
 	@NotNull
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@DateTimeFormat (pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	/*shape = JsonFormat.Shape.STRING
 	Questa annotazione permette di controllare la rappresentazione formattata
 	dei campi di una classe quando vengono convertiti da e verso JSON*/
@@ -45,8 +44,7 @@ public class Event {
 
 	@Column(name = "event_end")
 	@NotNull
-	@JsonFormat(shape = JsonFormat.Shape.STRING)
-	@DateTimeFormat (pattern = "dd-MM-yyyy HH:mm")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm")
 	/*Entrambe le annotazioni hanno scopi diversi e vengono utilizzate in contesti diversi.
 	Ad esempio, se stai scrivendo un controller REST per ricevere input da un client
 	(ad esempio tramite un modulo web o richieste POST di Postman), potresti utilizzare

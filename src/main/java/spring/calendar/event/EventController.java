@@ -27,9 +27,9 @@ public class EventController {
 		return ResponseEntity.ok(eventService.getEventByName(eventName));
 	}
 
-	@PostMapping("/{id}")
-	public ResponseEntity<?> createEvent(@PathVariable Long id, @RequestBody Event event) {
-		return ResponseEntity.ok(eventService.createEvent(id, event));
+	@PostMapping("/{calendarId}")
+	public ResponseEntity<?> createEvent(@PathVariable Long calendarId, @RequestBody Event event) {
+		return ResponseEntity.ok(eventService.createEvent(calendarId, event));
 	}
 
 	@DeleteMapping("/{id}")

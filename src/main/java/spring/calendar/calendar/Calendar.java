@@ -19,21 +19,19 @@ public class Calendar {
 	@Column(name = "calendar_id")
 	private Long id;
 
-	@NotBlank
-	@Column(name = "calendar_name", nullable = false, unique = true)
+	@Column(name = "calendar_name")
 	@Size (min = 3, max = 50)
 	@Pattern (regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of name")
 	private String calendarName;
 
-	@NotBlank
-	@Column(name = "calendar_description", nullable = false)
+	@Column(name = "calendar_description")
 	@Size(min = 3, max = 200)
 	@Pattern(regexp = "^\\S(.*\\S)?", message = "No space allowed at start or end of description")
 	private String calendarDescription;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "user_id", nullable = false)
-	@JsonIgnore
+//	@JsonIgnore
 	private User user;
 
 	@OneToMany(mappedBy = "eventCalendar", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -73,7 +71,6 @@ public class Calendar {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
 	public Set<Event> getEvents() {
 		return events;
 	}

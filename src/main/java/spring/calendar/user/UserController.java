@@ -49,7 +49,7 @@ public class UserController {
 	}
 
 	@PatchMapping("/{id}")
-	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody User updatedUser) {
+	public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody UserDTO updatedUser) {
 		if (userService.findUserById(id).isPresent()) {
 			return ResponseEntity.ok(userService.updateUser(id, updatedUser));
 		} else {
@@ -58,7 +58,7 @@ public class UserController {
 	}
 
 	@GetMapping("/search/email{email}")
-	public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+	public ResponseEntity<?> getUserByEmail(@RequestParam String email) {
 		return ResponseEntity.ok(userService.getUserByEmail(email));
 	}
 }

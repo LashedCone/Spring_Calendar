@@ -16,6 +16,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;

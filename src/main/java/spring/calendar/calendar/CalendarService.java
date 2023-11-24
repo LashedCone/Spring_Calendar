@@ -3,6 +3,7 @@ package spring.calendar.calendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import spring.calendar.user.User;
+import spring.calendar.user.UserDTO;
 import spring.calendar.user.UserRepo;
 
 import java.util.Optional;
@@ -33,17 +34,19 @@ public class CalendarService {
 		calendarRepo.deleteById(id);
 	}
 
-	public Calendar updateCalendar(Long id, Calendar updatedCalendar) {
-		Optional<Calendar> existingCalendar = calendarRepo.findById(id);
-		if(existingCalendar.isPresent()) {
-			Calendar calendar = existingCalendar.get();
-			if(updatedCalendar.getCalendarName() != null) {
-				calendar.setCalendarName(updatedCalendar.getCalendarName());
+	public Calendar updateCalendar(Long userId, Long calendarId, Calendar updatedCalendar) {
+		Optional<User> existingUser = userRepo.findById(userId);
+		Calendar existingCalendar = calendarRepo.findById(calendarId).get();
+		if(existingUser.isPresent()) {
+			if(existingCalendar.getUser().getId().equals(userId)) {
+				if(updatedCalendar.getCalendarName() != null) {
+					existingCalendar.setCalendarName(updatedCalendar.getCalendarName());
+				}
+				if(updatedCalendar.getCalendarDescription() != null) {
+					existingCalendar.setCalendarDescription(updatedCalendar.getCalendarDescription());
+				}
+				return calendarRepo.save(existingCalendar);
 			}
-			if(updatedCalendar.getCalendarDescription() != null) {
-				calendar.setCalendarDescription(updatedCalendar.getCalendarDescription());
-			}
-			return calendarRepo.save(calendar);
 		}
 		return null;
 	}
