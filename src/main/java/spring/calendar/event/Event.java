@@ -7,9 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.springframework.format.annotation.DateTimeFormat;
 import spring.calendar.calendar.Calendar;
 import spring.calendar.user.User;
+import spring.calendar.event.util.Frequency;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -63,6 +63,8 @@ public class Event {
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "calendar_id", nullable = false)
 	private Calendar eventCalendar;
+
+	private Frequency frequency = Frequency.NO_FREQUENCY;
 
 	public Event() {}
 
@@ -120,5 +122,13 @@ public class Event {
 
 	public void setEventCalendar(Calendar eventCalendar) {
 		this.eventCalendar = eventCalendar;
+	}
+
+	public Frequency getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(Frequency frequency) {
+		this.frequency = frequency;
 	}
 }

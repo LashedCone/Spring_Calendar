@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import spring.calendar.calendar.Calendar;
 import spring.calendar.calendar.CalendarRepo;
 import spring.calendar.user.User;
+import spring.calendar.user.UserRepo;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -14,27 +16,58 @@ public class EventService {
 	EventRepo eventRepo;
 	@Autowired
 	CalendarRepo calendarRepo;
+	@Autowired
+	UserRepo userRepo;
 
-	public Event createEvent(Long calendarId, Event event) {
+	public void createEvent(Long calendarId, Event event) {
 		Calendar calendar = calendarRepo.findById(calendarId).orElseThrow(IllegalArgumentException::new);
 		User user = calendar.getUser();
-		Event eventToSave = new Event();
-		if(event.getEventName() != null) {
+
+		LocalDateTime start = event.getEventStart();
+		LocalDateTime end = event.getEventStart().plusHours(1);
+		LocalDateTime eventEnd = event.getEventEnd();
+
+		while(start.isBefore(eventEnd) || start.isEqual(eventEnd)) {
+			Event eventToSave = new Event();
 			eventToSave.setEventName(event.getEventName());
-		}
-		if(event.getEventDescription() != null) {
 			eventToSave.setEventDescription(event.getEventDescription());
+
+			switch(event.getFrequency()) {
+				case NO_FREQUENCY:
+					eventToSave.setEventStart(start);
+					eventToSave.setEventEnd(end);
+					start = eventEnd.plusNanos(1);
+					break;
+				case DAILY:
+					eventToSave.setEventStart(start);
+					eventToSave.setEventEnd(end);
+					start = start.plusDays(1);
+					end = end.plusDays(1);
+					break;
+				case WEEKLY:
+					eventToSave.setEventStart(start);
+					eventToSave.setEventEnd(end);
+					start = start.plusWeeks(1);
+					end = end.plusWeeks(1);
+					break;
+				case MONTHLY:
+					eventToSave.setEventStart(start);
+					eventToSave.setEventEnd(end);
+					start = start.plusMonths(1);
+					end = end.plusMonths(1);
+					break;
+				case YEARLY:
+					eventToSave.setEventStart(start);
+					eventToSave.setEventEnd(end);
+					start = start.plusYears(1);
+					end = end.plusYears(1);
+					break;
+			}
+			eventToSave.getUsersList().add(user);
+			eventToSave.setEventCalendar(calendar);
+			calendar.getEvents().add(eventToSave);
+			eventRepo.save(eventToSave);
 		}
-		if(event.getEventStart() != null) {
-			eventToSave.setEventStart(event.getEventStart());
-		}
-		if(event.getEventEnd() != null) {
-			eventToSave.setEventEnd(event.getEventEnd());
-		}
-		eventToSave.getUsersList().add(user);
-		eventToSave.setEventCalendar(calendar);
-		calendar.getEvents().add(eventToSave);
-		return eventRepo.save(eventToSave);
 	}
 
 	public void deleteEvent(Long id) {
@@ -72,5 +105,23 @@ public class EventService {
 
 	public Iterable<Event> getEventByName(String eventName) {
 		return eventRepo.findByEventName(eventName);
+	}
+
+	public Iterable<Event> findEventByEventStart(LocalDateTime eventStart) {
+		return eventRepo.findEventByEventStartLessThanOrEqualTo(eventStart);
+	}
+
+	public Iterable<Event> findEventByEventStartBetween(LocalDateTime eventStart, LocalDateTime eventEnd) {
+		return eventRepo.findEventByEventStartBetween(eventStart, eventEnd);
+	}
+
+	public void invitation(Long eventId, Long userId) {
+		Event event = eventRepo.findById(eventId).orElseThrow(IllegalArgumentException::new);
+		User user = userRepo.findById(userId).orElseThrow(IllegalArgumentException::new);
+
+		event.getUsersList().add(user);
+		user.getUserEvents().add(event);
+		eventRepo.save(event);
+		userRepo.save(user);
 	}
 }

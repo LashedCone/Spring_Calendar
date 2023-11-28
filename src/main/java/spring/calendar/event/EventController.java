@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @RestController
@@ -27,9 +28,20 @@ public class EventController {
 		return ResponseEntity.ok(eventService.getEventByName(eventName));
 	}
 
+	@GetMapping("/less-or-equal/{eventStart}")
+	public ResponseEntity<?> findEventByEventStart(@PathVariable LocalDateTime eventStart) {
+		return ResponseEntity.ok(eventService.findEventByEventStart(eventStart));
+	}
+
+	@GetMapping("/between-date")
+	public ResponseEntity<?> findEventByEventStartBetween(@RequestParam LocalDateTime eventStart, @RequestParam LocalDateTime eventEnd) {
+		return ResponseEntity.ok(eventService.findEventByEventStartBetween(eventStart, eventEnd));
+	}
+
 	@PostMapping("/{calendarId}")
-	public ResponseEntity<?> createEvent(@PathVariable Long calendarId, @RequestBody Event event) {
-		return ResponseEntity.ok(eventService.createEvent(calendarId, event));
+	public ResponseEntity<String> createEvent(@PathVariable Long calendarId, @RequestBody Event event) {
+		eventService.createEvent(calendarId, event);
+		return ResponseEntity.ok("Event created");
 	}
 
 	@DeleteMapping("/{id}")
@@ -49,5 +61,11 @@ public class EventController {
 		} else {
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	@PatchMapping("/eventId/{eventId}/userId/{userId}")
+	public ResponseEntity<?> inviteUser(@PathVariable Long eventId, @PathVariable Long userId) {
+		eventService.invitation(eventId, userId);
+		return ResponseEntity.ok("INVITATION SENDED AND ACCEPTED WITHOUT ASKING CONFIRMATION!");
 	}
 }
