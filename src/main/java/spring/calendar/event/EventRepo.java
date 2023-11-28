@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 public interface EventRepo extends JpaRepository<Event, Long> {
 	Iterable<Event> findByEventName(String eventName);
 
-	Iterable<Event> findEventByEventStartLessThanOrEqualTo(LocalDateTime eventStart);
+	Iterable<Event> findEventByEventStart(LocalDateTime eventStart);
 
 	Iterable<Event> findEventByEventStartBetween(LocalDateTime eventStart, LocalDateTime eventEnd);
 }

@@ -108,7 +108,7 @@ public class EventService {
 	}
 
 	public Iterable<Event> findEventByEventStart(LocalDateTime eventStart) {
-		return eventRepo.findEventByEventStartLessThanOrEqualTo(eventStart);
+		return eventRepo.findEventByEventStart(eventStart);
 	}
 
 	public Iterable<Event> findEventByEventStartBetween(LocalDateTime eventStart, LocalDateTime eventEnd) {

@@ -28,8 +28,8 @@ public class EventController {
 		return ResponseEntity.ok(eventService.getEventByName(eventName));
 	}
 
-	@GetMapping("/less-or-equal/{eventStart}")
-	public ResponseEntity<?> findEventByEventStart(@PathVariable LocalDateTime eventStart) {
+	@GetMapping("/eventStart")
+	public ResponseEntity<?> findEventByEventStart(@RequestParam LocalDateTime eventStart) {
 		return ResponseEntity.ok(eventService.findEventByEventStart(eventStart));
 	}
 
